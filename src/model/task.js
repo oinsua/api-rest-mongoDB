@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const {Schema} = mongoose; //Se importa la funcionalidad Schema para definir la estructura de mi collections en mongodb
 
-const taskSchema = new Schema({
+const taskSchema = new Schema({ //Se definen las propiedades de l objeto json que se quiere almacenar en mongodb
     title: {
         type: String,
-        required: true,
-        trim: true 
+        required: true, //Es requerido
+        trim: true  //Eliminar los espacios en blancos 
     },
     description: {
         type: String,
@@ -13,7 +13,7 @@ const taskSchema = new Schema({
     },
     done: {
         type: Boolean,
-        default: false
+        default: false //En caso de no especificarse su valor siempre sera false
     }
 }, {
     versionKey: false, //para evitar que en la BD no aparezca __v

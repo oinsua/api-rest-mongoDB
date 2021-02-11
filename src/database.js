@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const config = require('./config');
+const {MONGODB_URI} = require('./config'); //Se importan la configuracion de las variables de entorno, para obtener la uri mongodb
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-                 .then(db => console.log(`db is connected to database ${db.connection.name}`))
-                 .catch(error => console.log(`db is not connected, error : ${error}`))
+//Se establece la conexcion a la bd mongodb
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+                 .then(db => console.log(`db is connected to database ${db.connection.name}`)) //En caso correcto mensaje de exito
+                 .catch(error => console.log(`db is not connected, error : ${error}`)) //En caso de error mensaje de error
  
 module.exports = mongoose; 
