@@ -24,7 +24,7 @@ const insertValitor = () => {
 
 const errors = resultValidator(req)
     if (errors.length > 0) {
-        return res.status(400).json({
+            res.status(400).json({
             method: req.method,
             status: res.statusCode,
             error: errors
