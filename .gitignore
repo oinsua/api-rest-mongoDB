@@ -6,3 +6,6 @@ node_modules
 
 ## build dir dist
 dist
+
+## postman
+postman
