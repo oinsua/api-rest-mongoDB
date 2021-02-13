@@ -1,18 +1,25 @@
 const taskModel = require('../model/task');//Se importa el modelo a traves del cual se pueden ejecutar las operaciones sobre mongodb
-const Pagination = require('../libs/getPage');
-const { validationResult, param } = require('express-validator');
-const {getPage} = Pagination;
+const {getPage} = require('../libs/getPage');
+const { validationResult} = require('express-validator');
+
 
 const findAllTask = async (req, res) => { //Se devuelven todas las tareas
     /*Agregar los validadores a traves de express-validator con un status 400 */
     try {
         //Para realizar la paginacion
-       /*  const {size, page} = req.query; //destructuracion
-        const {limit, offset} = getPage(size, page); */
-        //const tasks = await taskModel.paginate({}, {offset, limit});
-        const tasks = await taskModel.find();
-        console.log('task devueltas: ', tasks);
-         res.json(tasks);
+       const {size, page, title} = req.query; //destructuracion
+       const {limit, offset} = getPage(size, page); //Se reciben el limit y page para la paginacion
+       //Buscar por condicion del titulo
+       const condition = title
+       ? { title: { $regex: new RegExp(title), $options: "i" } }
+       : {};
+       const tasks = await taskModel.paginate(condition, {offset, limit}); //Se ejecuta la busqueda por paginacion en mongodb
+       return res.json({
+        totalItems: tasks.totalDocs,
+        tasks: tasks.docs,
+        totalPages: tasks.totalPages,
+        currentPage: tasks.page - 1,
+      });
     } catch (error) {
         res.status(500).json({
              message: "Error: All Task not founded"

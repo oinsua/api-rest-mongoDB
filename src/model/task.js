@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose; //Se importa la funcionalidad Schema para definir la estructura de mi collections en mongodb
+const mongoPagination = require('mongoose-paginate-v2');
 
 const taskSchema = new Schema({ //Se definen las propiedades de l objeto json que se quiere almacenar en mongodb
     title: {
@@ -20,4 +21,5 @@ const taskSchema = new Schema({ //Se definen las propiedades de l objeto json qu
     timestamps: true  //Cuando creo una nueva coleccion se agrega una propiedad "createAt" y "updateAt"
 }) 
 
+taskSchema.plugin(mongoPagination);  //Agrego el plugin para realizar la paginacion.
 module.exports = mongoose.model('Task', taskSchema);
